@@ -8,14 +8,18 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     margin: 0;
     overflow-x: hidden;
     background: black;
     color: white;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
 
-  /* 🎥 VIDEO BACKGROUND */
   .video-bg {
     position: fixed;
     inset: 0;
@@ -31,7 +35,6 @@
     transform: scale(1.05);
   }
 
-  /* 🌌 gradient overlay */
   .overlay {
     position: fixed;
     inset: 0;
@@ -42,14 +45,12 @@
       rgba(0,0,0,0.6);
   }
 
-  /* 🧊 glass */
   .glass {
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.08);
     backdrop-filter: blur(18px);
   }
 
-  /* 🧿 BOOT SCREEN */
   #boot {
     position: fixed;
     inset: 0;
@@ -59,7 +60,6 @@
     align-items: center;
     justify-content: center;
     z-index: 50;
-
     opacity: 1;
     transition: opacity 1.2s ease, filter 1.2s ease;
   }
@@ -76,13 +76,12 @@
     letter-spacing: 2px;
   }
 
-  /* ⌨️ typing cursor */
   .cursor {
-    display:inline-block;
-    width:10px;
-    height:1em;
-    background:white;
-    margin-left:4px;
+    display: inline-block;
+    width: 10px;
+    height: 1em;
+    background: white;
+    margin-left: 4px;
     animation: blink 0.8s infinite;
   }
 
@@ -90,13 +89,11 @@
     50% { opacity: 0; }
   }
 
-  /* smooth scene movement */
   .scene {
     transition: transform 0.15s ease-out;
     will-change: transform;
   }
 
-  /* reveal */
   .reveal {
     opacity: 0;
     transform: translateY(30px);
@@ -107,12 +104,95 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    width: min(1100px, calc(100% - 32px));
+    margin: 20px auto 0;
+    border-radius: 999px;
+  }
+
+  .nav-link {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nav-link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(192,132,252,0.18), rgba(255,255,255,0.03));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .nav-link:hover::before,
+  .nav-link:focus-visible::before {
+    opacity: 1;
+  }
+
+  .section-anchor {
+    scroll-margin-top: 120px;
+  }
+
+  .creation-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .creation-card img {
+    width: 88px;
+    height: 88px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .nsfw-card .nsfw-content {
+    filter: blur(18px);
+    transition: filter 0.35s ease, transform 0.35s ease;
+  }
+
+  .nsfw-card .nsfw-warning {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    background: rgba(6, 6, 10, 0.5);
+    backdrop-filter: blur(3px);
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .nsfw-card:hover .nsfw-content,
+  .nsfw-card:focus-within .nsfw-content {
+    filter: blur(0);
+    transform: scale(1.01);
+  }
+
+  .nsfw-card:hover .nsfw-warning,
+  .nsfw-card:focus-within .nsfw-warning {
+    opacity: 0;
+  }
+
+  @media (max-width: 767px) {
+    .top-nav {
+      border-radius: 28px;
+      padding: 14px;
+    }
+  }
 </style>
 </head>
 
 <body>
 
-<!-- 🎥 VIDEO BACKGROUND -->
 <div class="video-bg">
   <video autoplay muted loop>
     <source src="https://www.pexels.com/download/video/29717603/" type="video/mp4">
@@ -121,17 +201,26 @@
 
 <div class="overlay"></div>
 
-<!-- 🧿 BOOT -->
 <div id="boot">
   <div class="bootText" id="bootText">INITIALIZING OPENDRIVER VR...</div>
 </div>
 
-<!-- 🌌 SCENE -->
 <div class="scene" id="scene">
 
-<!-- HERO -->
-<section class="min-h-screen flex flex-col items-center justify-center text-center px-6">
+<nav class="top-nav glass px-4 py-3">
+  <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div class="text-sm md:text-base font-semibold tracking-[0.3em] text-purple-200 uppercase px-3">
+      OpenDriver VR
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <a href="#home" class="nav-link rounded-full px-5 py-2 text-sm md:text-base font-medium text-white/90 transition hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-purple-300">Home</a>
+      <a href="#tiktok" class="nav-link rounded-full px-5 py-2 text-sm md:text-base font-medium text-white/90 transition hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-purple-300">TikTok</a>
+      <a href="#creations" class="nav-link rounded-full px-5 py-2 text-sm md:text-base font-medium text-white/90 transition hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-purple-300">Our Creations</a>
+    </div>
+  </div>
+</nav>
 
+<section id="home" class="section-anchor min-h-screen flex flex-col items-center justify-center text-center px-6 pt-14">
   <h1 class="text-6xl md:text-7xl font-bold">
     OpenDriver <span class="text-purple-400">VR</span>
   </h1>
@@ -141,7 +230,7 @@
   </div>
 
   <p class="mt-8 max-w-2xl text-gray-300">
-    Open-Source SteamVR Drivers for 6dof tracking and more.
+    Open-source SteamVR drivers for 6DOF tracking, custom devices, and a growing community building experimental VR tech together.
   </p>
 
   <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -154,7 +243,7 @@
       Discord
     </a>
     <a
-      href="https://github.com/rozgaleziacz/OpenDriver-VR"
+      href="https://github.com/Rozgaleziacz/OpenDriver-VR"
       target="_blank"
       rel="noopener noreferrer"
       class="glass rounded-xl px-6 py-3 text-sm md:text-base font-medium tracking-wide transition-all duration-300 hover:-translate-y-1 hover:bg-white/10 hover:shadow-[0_0_30px_rgba(167,139,250,0.25)] focus:outline-none focus:ring-2 focus:ring-purple-300"
@@ -162,12 +251,9 @@
       GitHub
     </a>
   </div>
-
 </section>
 
-<!-- FEATURES -->
 <section class="max-w-6xl mx-auto px-6 py-24 grid md:grid-cols-3 gap-6 reveal">
-
   <div class="glass p-6 rounded-2xl">
     <h3 class="text-xl font-semibold">6DOF Engine</h3>
     <p class="mt-3 text-gray-300 leading-relaxed">
@@ -191,11 +277,9 @@
       The project is open-source, community-driven, and focused on making VR tracking more accessible to everyone.
     </p>
   </div>
-
 </section>
 
-<!-- CREATOR INFO -->
-<section class="max-w-5xl mx-auto px-6 pb-14 reveal">
+<section id="tiktok" class="section-anchor max-w-5xl mx-auto px-6 pb-14 reveal">
   <div class="glass rounded-2xl p-8 md:p-10 text-center">
     <h2 class="text-2xl md:text-3xl font-semibold">
       Become a TikTok Creator for OpenDriver VR
@@ -218,19 +302,115 @@
   </div>
 </section>
 
-<!-- Elfsight TikTok Feed | Untitled TikTok Feed -->
 <script src="https://elfsightcdn.com/platform.js" async></script>
 <div class="elfsight-app-6104aabc-26b0-4cac-ab54-373fd542812e" data-elfsight-app-lazy></div>
 
+<section id="creations" class="section-anchor max-w-6xl mx-auto px-6 py-24 reveal">
+  <div class="max-w-3xl mb-10">
+    <p class="text-sm uppercase tracking-[0.35em] text-purple-200">Our Creations</p>
+    <h2 class="mt-3 text-3xl md:text-5xl font-bold">Projects built by the OpenDriver VR community</h2>
+    <p class="mt-4 text-gray-300 leading-relaxed">
+      Here are two of our best known creations so far. One is the core SteamVR driver ecosystem we are building long-term,
+      and the other is a community-made VR game project with mature content.
+    </p>
+  </div>
+
+  <div class="grid gap-8 lg:grid-cols-2">
+    <article class="creation-card glass rounded-3xl p-8 md:p-10">
+      <div class="flex flex-col sm:flex-row sm:items-start gap-6">
+        <img src="ODVR.png" alt="OpenDriver VR icon" />
+        <div>
+          <p class="text-sm uppercase tracking-[0.3em] text-purple-200">Flagship Creation</p>
+          <h3 class="mt-2 text-2xl md:text-3xl font-semibold">OpenDriver VR</h3>
+          <p class="mt-4 text-gray-300 leading-relaxed">
+            Our biggest creation is OpenDriver VR, an open-source SteamVR driver focused on custom tracking,
+            experimental 6DOF setups, and making VR hardware development more accessible for the community.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-4 md:grid-cols-2">
+        <div class="rounded-2xl bg-white/5 p-5 border border-white/10">
+          <h4 class="font-semibold text-lg">Current status</h4>
+          <p class="mt-2 text-sm text-gray-300 leading-relaxed">
+            The project is still in active development. Current public releases should be treated as test versions,
+            and some features are not fully stable or fully working yet.
+          </p>
+        </div>
+        <div class="rounded-2xl bg-white/5 p-5 border border-white/10">
+          <h4 class="font-semibold text-lg">People behind it</h4>
+          <p class="mt-2 text-sm text-gray-300 leading-relaxed">
+            Main developer: diment. Founder: Lajmonek.
+            The wider OpenDriver VR community also helps shape the project and direction.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-4 text-sm text-gray-300">
+        <p>
+          GitHub organization:
+          <a href="https://github.com/aresos-team" target="_blank" rel="noopener noreferrer" class="text-purple-300 hover:text-purple-200 underline underline-offset-4">aresos-team</a>
+        </p>
+        <p>
+          Founder GitHub:
+          <a href="https://github.com/Rozgaleziacz" target="_blank" rel="noopener noreferrer" class="text-purple-300 hover:text-purple-200 underline underline-offset-4">Rozgaleziacz</a>
+        </p>
+        <p>
+          Project GitHub and download:
+          <a href="https://github.com/Rozgaleziacz/OpenDriver-VR" target="_blank" rel="noopener noreferrer" class="text-purple-300 hover:text-purple-200 underline underline-offset-4">OpenDriver-VR</a>
+        </p>
+      </div>
+    </article>
+
+    <article class="creation-card nsfw-card glass rounded-3xl p-8 md:p-10">
+      <div class="nsfw-content">
+        <div class="flex flex-col sm:flex-row sm:items-start gap-6">
+          <img src="SWIVR.png" alt="Sex With Iraybot VR icon" />
+          <div>
+            <p class="text-sm uppercase tracking-[0.3em] text-rose-200">NSFW Creation</p>
+            <h3 class="mt-2 text-2xl md:text-3xl font-semibold">Sex With Iraybot VR</h3>
+            <p class="mt-4 text-gray-300 leading-relaxed">
+              Sex With Iraybot VR is an immersive adult VR project for mature players, built around interactive scenes,
+              full VR support, multiplayer features, voice chat, and a personalized community-driven style.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 grid gap-4 md:grid-cols-2">
+          <div class="rounded-2xl bg-white/5 p-5 border border-white/10">
+            <h4 class="font-semibold text-lg">About the game</h4>
+            <p class="mt-2 text-sm text-gray-300 leading-relaxed">
+              The experience is based on realistic character likenesses and was vibe-coded by the OpenDriver VR community.
+              It is intended only for adults and includes explicit 18+ content.
+            </p>
+          </div>
+          <div class="rounded-2xl bg-white/5 p-5 border border-white/10">
+            <h4 class="font-semibold text-lg">Developer</h4>
+            <p class="mt-2 text-sm text-gray-300 leading-relaxed">
+              Main developer: Lajmonek.
+              GitHub:
+              <a href="https://github.com/Rozgaleziacz" target="_blank" rel="noopener noreferrer" class="text-rose-300 hover:text-rose-200 underline underline-offset-4">Rozgaleziacz</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 text-sm text-gray-300">
+          Project page and download:
+          <a href="https://lajmonek.itch.io/sex-with-iraybot-vr" target="_blank" rel="noopener noreferrer" class="text-rose-300 hover:text-rose-200 underline underline-offset-4">lajmonek.itch.io/sex-with-iraybot-vr</a>
+        </div>
+      </div>
+      <div class="nsfw-warning">NSFW</div>
+    </article>
+  </div>
+</section>
 
 <footer class="text-center py-10 text-gray-400">
-  © <span id="year"></span> OpenDriver VR
+  &copy; <span id="year"></span> OpenDriver VR
 </footer>
 
 </div>
 
 <script>
-/* 🧿 BOOT SEQUENCE (SMOOTH FADE) */
 const boot = document.getElementById("boot");
 const bootText = document.getElementById("bootText");
 
@@ -259,8 +439,6 @@ function bootLoop() {
 }
 bootLoop();
 
-
-/* ⌨️ TYPE EFFECT */
 const words = [
   "best VR experience",
   "DIY VR platform",
@@ -269,11 +447,13 @@ const words = [
   "future of VR"
 ];
 
-let w = 0, c = 0, del = false;
+let w = 0;
+let c = 0;
+let del = false;
 const el = document.getElementById("dynamic");
 
 function type() {
-  let word = words[w];
+  const word = words[w];
 
   el.textContent = word.slice(0, c);
 
@@ -295,27 +475,25 @@ function type() {
 }
 type();
 
-
-/* 🌫️ SCROLL REVEAL */
-const obs = new IntersectionObserver(e =>
-  e.forEach(x => x.isIntersecting && x.target.classList.add("show"))
+const obs = new IntersectionObserver(entries =>
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+    }
+  })
 );
 
-document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
+document.querySelectorAll(".reveal").forEach(item => obs.observe(item));
 
-
-/* 🧠 FULL SCENE PARALLAX (MOUSE MOVE) */
 const scene = document.getElementById("scene");
 
-document.addEventListener("mousemove", (e) => {
-  const x = (e.clientX / window.innerWidth - 0.5) * 20;
-  const y = (e.clientY / window.innerHeight - 0.5) * 20;
+document.addEventListener("mousemove", event => {
+  const x = (event.clientX / window.innerWidth - 0.5) * 20;
+  const y = (event.clientY / window.innerHeight - 0.5) * 20;
 
   scene.style.transform = `translate(${x}px, ${y}px)`;
 });
 
-
-/* footer */
 document.getElementById("year").innerText = new Date().getFullYear();
 </script>
 
